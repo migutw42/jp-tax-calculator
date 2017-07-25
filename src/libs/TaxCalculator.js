@@ -1,5 +1,16 @@
 // @flow
 
+export type TaxInfo = {
+  income: number,
+  expenses: number,
+  nationalHealthInsurance: number,
+  nationalPension: number,
+  incomeDeduction: number,
+  residentsTax: number,
+  incomeTax: number,
+  totalFee: number
+};
+
 export default class TaxCalculator {
   /**
    * 国民健康保険料計算
@@ -29,36 +40,92 @@ export default class TaxCalculator {
   }
 
   // 国民年金
-  static getNationalPension() {
+  static getNationalPension(): number {
     return 16490 * 12;
   }
 
   // 所得税
-  static getIncomeTax(income, expenses, incomeDeduction) {
+  static getIncomeTax(
+    income: number,
+    expenses: number,
+    incomeDeduction: number
+  ) {
     const whitePaperDedutionForm = 100000;
 
-    const INCOME_TAX_TABLE = [
+    type IncomeTax = {
+      threshold: number,
+      rate: number,
+      debutation: number
+    };
+    const INCOME_TAX_TABLE: IncomeTax[] = [
       { threshold: 1950000, rate: 0.05, debutation: 0 },
       { threshold: 3300000, rate: 0.1, debutation: 97500 },
       { threshold: 6950000, rate: 0.2, debutation: 427500 },
       { threshold: 9000000, rate: 0.23, debutation: 636000 },
       { threshold: 18000000, rate: 0.33, debutation: 1536000 },
       { threshold: 40000000, rate: 0.4, debutation: 2796000 },
-      { threshold: 99999999, rate: 0.45, debutation: 4796000 }
+      { threshold: Infinity, rate: 0.45, debutation: 4796000 }
     ];
 
-    const { rate, debutation } = INCOME_TAX_TABLE.find(
-      el => income <= el.threshold
+    const incomeTax: ?IncomeTax = INCOME_TAX_TABLE.find(
+      (el: IncomeTax) => income <= el.threshold
     );
+
+    // 恐らくNaNのときだけ値を取得できないので、その時はNaNを返す。
+    if (!incomeTax) {
+      console.error('invalid income');
+      return NaN;
+    }
+
     return Math.round(
-      (income - expenses - whitePaperDedutionForm - incomeDeduction) * rate -
-        debutation
+      (income - expenses - whitePaperDedutionForm - incomeDeduction) *
+        incomeTax.rate -
+        incomeTax.debutation
     );
   }
 
   // 所得控除
-  static getIncomeDeduction(nationalHealthInsuranceFee) {
-    const baseDedution = 380000;
+  static getIncomeDeduction(nationalHealthInsuranceFee: number): number {
+    const baseDedution: number = 380000;
     return Math.round(baseDedution + nationalHealthInsuranceFee);
+  }
+
+  static getTaxInfo(income: number, expenses: number): TaxInfo {
+    const nationalHealthInsurance = this.getNationalHealthInsurance(
+      income,
+      expenses
+    );
+
+    const nationalPension: number = this.getNationalPension();
+
+    const incomeDeduction: number = this.getIncomeDeduction(
+      nationalHealthInsurance
+    );
+
+    const residentsTax: number = this.getResidentsTax(
+      income,
+      expenses,
+      incomeDeduction
+    );
+
+    const incomeTax: number = this.getIncomeTax(
+      income,
+      expenses,
+      incomeDeduction
+    );
+
+    const totalFee: number =
+      nationalHealthInsurance + nationalPension + residentsTax + incomeTax;
+
+    return {
+      income: income,
+      expenses: expenses,
+      nationalHealthInsurance: nationalHealthInsurance,
+      nationalPension: nationalPension,
+      incomeDeduction: incomeDeduction,
+      residentsTax: residentsTax,
+      incomeTax: incomeTax,
+      totalFee: totalFee
+    };
   }
 }
