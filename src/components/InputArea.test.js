@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TextFields from './TextFields';
+import InputArea from './InputArea';
 
 it('renders without crashing', () => {
-  shallow(<TextFields />);
+  shallow(<InputArea />);
 });

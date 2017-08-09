@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import TextFields from './TextFields';
+import InputArea from './InputArea';
 
 import Grid from 'material-ui/Grid';
 
@@ -21,7 +21,7 @@ class App extends Component {
         <div style={{ padding: '0.5em' }}>
           <Grid container justify={'center'}>
             <Grid item xs={12} sm={4}>
-              <TextFields />
+              <InputArea />
             </Grid>
           </Grid>
         </div>
