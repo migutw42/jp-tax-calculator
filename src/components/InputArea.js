@@ -19,6 +19,7 @@ class TextFields extends Component {
               value={this.state.income}
               onChange={event => this.setState({ income: event.target.value })}
               margin="normal"
+              style={{ width: '100%' }}
             />
           </div>
           <div>
@@ -29,6 +30,7 @@ class TextFields extends Component {
               onChange={event =>
                 this.setState({ expenses: event.target.value })}
               margin="normal"
+              style={{ width: '100%' }}
             />
           </div>
         </CardContent>
