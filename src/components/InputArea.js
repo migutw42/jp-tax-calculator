@@ -3,11 +3,20 @@ import TextField from 'material-ui/TextField';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 
+import TaxCalculator from '../libs/TaxCalculator';
+
 class TextFields extends Component {
   state = {
     income: 0,
     expenses: 0
   };
+
+  calculate() {
+    const { income, expenses } = this.state;
+    const taxInfo = TaxCalculator.getTaxInfo(income, expenses);
+    this.props.handleUpdate(taxInfo);
+  }
+
   render() {
     return (
       <Card>
@@ -35,7 +44,7 @@ class TextFields extends Component {
           </div>
         </CardContent>
         <CardActions>
-          <Button>Calculate</Button>
+          <Button onClick={() => this.calculate()}>Calculate</Button>
         </CardActions>
       </Card>
     );

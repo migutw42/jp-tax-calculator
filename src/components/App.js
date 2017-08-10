@@ -3,14 +3,23 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import InputArea from './InputArea';
-
 import Grid from 'material-ui/Grid';
 
+import InputArea from './InputArea';
+import TableArea from './TableArea';
+
 class App extends Component {
+  state = {
+    data: {}
+  };
+
+  handleUpdate(data) {
+    this.setState({ data });
+  }
+
   render() {
     return (
-      <div style={{ backgroundColor: '#eeeeee', height: '100vh' }}>
+      <div style={{ backgroundColor: '#eeeeee', minHeight: '100vh' }}>
         <AppBar position="static">
           <Toolbar>
             <Typography type="title" color="inherit">
@@ -21,7 +30,12 @@ class App extends Component {
         <div style={{ padding: '0.5em' }}>
           <Grid container justify={'center'}>
             <Grid item xs={12} sm={4}>
-              <InputArea />
+              <InputArea handleUpdate={data => this.handleUpdate(data)} />
+            </Grid>
+          </Grid>
+          <Grid container justify={'center'}>
+            <Grid item xs={12} sm={4}>
+              <TableArea data={this.state.data} />
             </Grid>
           </Grid>
         </div>
