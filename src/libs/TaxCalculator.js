@@ -128,4 +128,18 @@ export default class TaxCalculator {
       totalFee: totalFee
     };
   }
+
+  static translate(key: string): string {
+    const words = {
+      income: '収入',
+      expenses: '支出',
+      nationalHealthInsurance: '国民健康保険料',
+      nationalPension: '国民年金',
+      incomeDeduction: '所得控除',
+      residentsTax: '住民税',
+      incomeTax: '所得税',
+      totalFee: '合計費用'
+    };
+    return words[key] || key;
+  }
 }
