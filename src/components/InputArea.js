@@ -27,6 +27,7 @@ class TextFields extends Component {
               type="number"
               value={this.state.income}
               onChange={event => this.setState({ income: event.target.value })}
+              inputProps={{ step: '10000' }}
               margin="normal"
               style={{ width: '100%' }}
             />
@@ -38,6 +39,7 @@ class TextFields extends Component {
               value={this.state.expenses}
               onChange={event =>
                 this.setState({ expenses: event.target.value })}
+              inputProps={{ step: '10000' }}
               margin="normal"
               style={{ width: '100%' }}
             />
