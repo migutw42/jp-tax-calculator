@@ -34,8 +34,11 @@ export default class TaxCalculator {
     incomeDeduction: number
   ): number {
     const baseFee: number = income - expenses - (incomeDeduction + 50000);
-    return Math.round(
-      baseFee * 0.06 + 3500 + (baseFee * 0.04 + 1500) - incomeDeduction * 0.05
+    return Math.max(
+      0,
+      Math.round(
+        baseFee * 0.06 + 3500 + (baseFee * 0.04 + 1500) - incomeDeduction * 0.05
+      )
     );
   }
 
@@ -77,10 +80,13 @@ export default class TaxCalculator {
       return NaN;
     }
 
-    return Math.round(
-      (income - expenses - whitePaperDedutionForm - incomeDeduction) *
-        incomeTax.rate -
-        incomeTax.debutation
+    return Math.max(
+      0,
+      Math.round(
+        (income - expenses - whitePaperDedutionForm - incomeDeduction) *
+          incomeTax.rate -
+          incomeTax.debutation
+      )
     );
   }
 
@@ -123,8 +129,8 @@ export default class TaxCalculator {
       nationalHealthInsurance: nationalHealthInsurance,
       nationalPension: nationalPension,
       incomeDeduction: incomeDeduction,
-      residentsTax: residentsTax,
       incomeTax: incomeTax,
+      residentsTax: residentsTax,
       totalFee: totalFee
     };
   }
