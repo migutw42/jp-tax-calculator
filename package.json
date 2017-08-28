@@ -9,6 +9,7 @@
     "lint-staged": "^4.0.2",
     "material-ui": "next",
     "material-ui-icons": "^1.0.0-alpha.19",
+    "numeral": "^2.0.6",
     "prettier": "^1.5.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

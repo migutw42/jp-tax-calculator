@@ -6,6 +6,9 @@ import Table, {
   TableHead,
   TableRow
 } from 'material-ui/Table';
+import numeral from 'numeral';
+
+import TaxCalculator from '../libs/TaxCalculator';
 
 const TableArea = ({ data }) =>
   <Paper>
@@ -21,10 +24,10 @@ const TableArea = ({ data }) =>
           return (
             <TableRow key={name}>
               <TableCell>
-                {name}
+                {TaxCalculator.translate(name)}
               </TableCell>
               <TableCell numeric>
-                {data[name]}
+                {'￥' + numeral(data[name]).format('0,0')}
               </TableCell>
             </TableRow>
           );
