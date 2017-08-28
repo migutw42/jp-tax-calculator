@@ -33,7 +33,15 @@ class App extends Component {
               <InputArea handleUpdate={data => this.handleUpdate(data)} />
             </Grid>
           </Grid>
-          <Grid container justify={'center'}>
+          <Grid
+            container
+            justify={'center'}
+            style={
+              Object.keys(this.state.data).length !== 0
+                ? {}
+                : { display: 'none' }
+            }
+          >
             <Grid item xs={12} sm={4}>
               <TableArea data={this.state.data} />
             </Grid>
