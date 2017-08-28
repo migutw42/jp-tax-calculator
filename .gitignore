@@ -9,6 +9,10 @@
 # production
 /build
 
+# setting
+/.vscode/*
+!/.vscode/launch.json
+
 # misc
 .DS_Store
 .env.local
