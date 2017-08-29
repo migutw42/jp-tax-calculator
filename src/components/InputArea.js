@@ -10,10 +10,9 @@ class TextFields extends Component {
     event.preventDefault();
 
     const formElement = event.target;
-    const taxInfo = TaxCalculator.getTaxInfo(
-      formElement.income.value,
-      formElement.expenses.value
-    );
+    const income = Number(formElement.elements.income.value);
+    const expenses = Number(formElement.elements.expenses.value);
+    const taxInfo = TaxCalculator.getTaxInfo(income, expenses);
     this.props.handleUpdate(taxInfo);
   }
 
